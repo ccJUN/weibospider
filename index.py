@@ -7,9 +7,18 @@ import re
 import sys
 from task import news 
 import urllib
-#from task import news 
+from flask import Flask
+#from task import news
+
+app = Flask(__name__)
+app.debug = True
+
+@app.route("/")
+def hello():
+    return "hello world!"
 
 if __name__=="__main__":
+    app.run()
     word = urllib.quote('=60&q=啥是佩奇&t=4')
     originWord  = '啥是佩奇'
     number = 1
