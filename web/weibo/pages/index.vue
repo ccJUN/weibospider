@@ -37,16 +37,21 @@
 <script>
 import echarts from "echarts";
 import jquery from "jquery";
-import echartBar from "../plugins/bar.js";
-import { $ajax } from '../plugins/axios'
+import echartsBar from "../plugins/tree";
+import { $ajax } from '../plugins/axios';
+import axios from 'axios'
+import getApi from '../plugins/getrelation'
 
 export default {
   data() {
     return {
-      weibojson: require("assets/json/weibo.json"),
-      weiboSum:require("assets/json/sum.json"),
+      weibojson: {},
+      weiboSum:{},
       nextnode:''
     };
+  },
+  beforeCreate(){
+   
   },
   components: {
     echarts,
@@ -57,69 +62,19 @@ export default {
   mounted() {
     this.draw()
     this.time()
-    this.nextnode = this.weiboSum.children;
-    console.log(this.nextnode)
   },
   methods: {
       draw: function() {
-        var app = {};
-        let data = this.weibojson;
-        var dom = document.getElementById("container");
-        var myChart = echarts.init(dom);
-        var option = null;
-        echarts.util.each(data.children, function(datum, index) {
-          index % 2 === 0 && (datum.collapsed = true);
-        });
-        myChart.setOption(
-          ( option = {
-            tooltip: {
-              trigger: "item",
-              triggerOn: "mousemove"
-            },
-            series: [
-              {
-                type: "tree",
-                data: [data],
-                top: "1%",
-                left: "7%",
-                bottom: "1%",
-                right: "20%",
-
-                symbolSize: 11,
-
-                label: {
-                  normal: {
-                    position: "left",
-                    verticalAlign: "middle",
-                    align: "right",
-                    fontSize: 14
-                  }
-                },
-
-                leaves: {
-                  label: {
-                    normal: {
-                      position: "right",
-                      verticalAlign: "middle",
-                      align: "left"
-                    }
-                  }
-                },
-
-                expandAndCollapse: true,
-                animationDuration: 550,
-                animationDurationUpdate: 750
-              }
-            ]
-          })
-        );
-      // console.log(this.weibojson)
+        axios.get('http://127.0.0.1:5000/getRelation').then(function(response){
+            var res 
+            res = response
+            var dom = document.getElementById("container");
+            echartsBar(res,dom)
+        })
       },
-      time:function(){
-        var data = $ajax.get('http://127.0.0.1:5000',function(){})
-        console.log(data)
-      }
 
+      time:function(){
+      },
   }
 };
 </script>
