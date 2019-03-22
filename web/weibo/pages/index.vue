@@ -2,6 +2,10 @@
   <section class="container">
     <div>
       <h1 class="title">微博路径</h1>
+      <div>
+        <input placeholder="输入搜索热点">
+        <button>热点分析</button>
+      </div>
       <div class="echart1">
           <h2 class="subtitle">关系链图谱</h2>
           <div id="container" class="main"></div>
@@ -51,7 +55,7 @@ export default {
     };
   },
   beforeCreate(){
-   
+
   },
   components: {
     echarts,
@@ -66,7 +70,7 @@ export default {
   methods: {
       draw: function() {
         axios.get('http://127.0.0.1:5000/getRelation').then(function(response){
-            var res 
+            var res
             res = response
             var dom = document.getElementById("container");
             echartsBar(res,dom)
