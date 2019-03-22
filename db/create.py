@@ -1,19 +1,22 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import MySQLdb
 import mysql.connector
-db = MySQLdb.connect("localhost", "root", "zhouwenyi1992", "TESTDB", charset='utf8' )
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  passwd="zhouwenyi1992",
+  database="weibo"
+)
 
 # 使用cursor()方法获取操作游标 
-cursor = db.cursor()
+mycursor = mydb.cursor()
 
 # 使用execute方法执行SQL语句
-cursor.execute("SELECT VERSION()")
+mycursor.execute("CREATE TABLE hotweibo (content TEXT, anchor VARCHAR(255), comment INT(64),report INT(64),fans INT(64),topic TEXT,zan INT(64),time TIMESTAMP)")
 
 # 使用 fetchone() 方法获取一条数据
-data = cursor.fetchone()
-
-print "Database version : %s " % data
+data = mycursor.fetchone()
 
 # 关闭数据库连接
-db.close()
+mydb.close()

@@ -45,7 +45,7 @@ import getApi from '../plugins/getrelation'
 export default {
   data() {
     return {
-      weibojson: {},
+      weibojson: require('~/assets/json/weibo.json'),
       weiboSum:{},
       nextnode:''
     };
@@ -65,14 +65,14 @@ export default {
   },
   methods: {
       draw: function() {
+        const weibojson = this.weibojson
         axios.get('http://127.0.0.1:5000/getRelation').then(function(response){
             var res 
             res = response
             var dom = document.getElementById("container");
-            echartsBar(res,dom)
+            echartsBar(weibojson,dom)
         })
       },
-
       time:function(){
       },
   }
