@@ -1,7 +1,7 @@
 import echarts from "echarts";
 
 export  default function echartsBar(data,container){
-    console.log(data,container)
+    console.log(data.data,container)
     var app = {},
         data = data,
         chartDom = container,
@@ -26,9 +26,7 @@ export  default function echartsBar(data,container){
             left: "7%",
             bottom: "1%",
             right: "20%",
-
             symbolSize: 11,
-
             label: {
               normal: {
                 position: "left",

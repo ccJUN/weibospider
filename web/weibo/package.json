@@ -12,18 +12,21 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
     "cross-env": "^5.2.0",
-    "echarts": "^4.1.0",
+    "echarts": "^4.2.1",
     "element-ui": "^2.4.11",
     "jquery": "^3.3.1",
     "nuxt": "^2.4.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9",
+    "@babel/preset-env": "^7.4.2",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.1.0",
     "jest": "^24.1.0",
+    "nodemon": "^1.18.9",
     "vue-jest": "^3.0.3"
   }
 }
