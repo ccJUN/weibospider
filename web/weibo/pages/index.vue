@@ -2,12 +2,12 @@
   <section class="container">
     <div>
       <h1 class="title">微博路径</h1>
-      <div>
+      <div class="search">
         <input placeholder="输入搜索热点">
-        <button>热点分析</button>
+        <button class="ui-btn">热点分析</button>
       </div>
       <div class="echart1">
-          <h2 class="subtitle">关系链图谱</h2>
+          <h2 class="subtitle">转发次数</h2>
           <div id="container" class="main"></div>
           <div class="echart"></div>
       </div>
@@ -26,11 +26,10 @@
               </li>
             </ul>
           </div>
-
           <div class="echart"></div>
       </div>
       <div class="影响力图谱">
-          <h2 class="subtitle">影响力图谱</h2>
+          <h2 class="subtitle">关系链图谱</h2>
           <div id="container" class="main"></div>
           <div class="echart"></div>
       </div>
@@ -38,11 +37,11 @@
   </section>
 </template>
 
+<style lang="scss" scoped src="~/assets/scss/index.scss"></style>
 <script>
 import echarts from "echarts";
 import jquery from "jquery";
 import echartsBar from "../plugins/tree";
-import { $ajax } from '../plugins/axios';
 import axios from 'axios'
 import getApi from '../plugins/getrelation'
 
@@ -74,7 +73,7 @@ export default {
             var res
             res = response
             var dom = document.getElementById("container");
-            echartsBar(weibojson,dom)
+            // echartsBar(weibojson,dom);
         })
       },
       time:function(){

@@ -1,56 +1,41 @@
-// import echarts from "echarts";
+import echarts from "echarts";
+app.title = '坐标轴刻度与标签对齐';
 
-// export  default function echartsBar(data,container){
-//     var app = {},
-//         data = data;
-//         dom = container,
-//         myChart = echarts.init(dom),
-//         option = null;
-//     echarts.util.each(data.children, function(datum, index) {
-//       index % 2 === 0 && (datum.collapsed = true);
-//     });
+option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            
+            type : 'shadow' 
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'直接访问',
+            type:'bar',
+            barWidth: '60%',
+            data:[10, 52, 200, 334, 390, 330, 220]
+        }
+    ]
+};
 
-//     myChart.setOption(
-//       ( option = {
-//         tooltip: {
-//           trigger: "item",
-//           triggerOn: "mousemove"
-//         },
-//         series: [
-//           {
-//             type: "tree",
-//             data: [data],
-//             top: "1%",
-//             left: "7%",
-//             bottom: "1%",
-//             right: "20%",
-
-//             symbolSize: 11,
-
-//             label: {
-//               normal: {
-//                 position: "left",
-//                 verticalAlign: "middle",
-//                 align: "right",
-//                 fontSize: 14
-//               }
-//             },
-
-//             leaves: {
-//               label: {
-//                 normal: {
-//                   position: "right",
-//                   verticalAlign: "middle",
-//                   align: "left"
-//                 }
-//               }
-//             },
-
-//             expandAndCollapse: true,
-//             animationDuration: 550,
-//             animationDurationUpdate: 750
-//           }
-//         ]
-//       })
-//     );
-// };

@@ -6,7 +6,6 @@ export  default function echartsBar(data,container){
         data = data,
         chartDom = container,
         option = null,
-
     myChart = echarts.init(chartDom);
     echarts.util.each(data.children, function(datum, index) {
       index % 2 === 0 && (datum.collapsed = true);
