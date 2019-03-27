@@ -1,5 +1,6 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 import mysql.connector
-
 
 def mysqlInsert(mysqldb,mysqlstring):
 
@@ -16,7 +17,7 @@ def mysqlInsert(mysqldb,mysqlstring):
     mysqlKey = '('
     for (key,value) in InsertString.items():
         # print(type(value))
-        if(key=='anchor'):
+        if(key==InsertString.keys()[-1] ):
             mysqlKey=mysqlKey+str(key).encode('utf-8')
             if(type(value)== unicode):
                 mysqlContent = mysqlContent+'"'+value.encode('utf-8')+'"'
@@ -31,7 +32,7 @@ def mysqlInsert(mysqldb,mysqlstring):
     mysqlContent=mysqlContent+')'
     mysqlKey=mysqlKey+')'
     sql = " INSERT INTO  " +mysqldb + mysqlKey + " VALUES  " +mysqlContent
-    # print(sql)
+    print(sql)
     cursor.execute(sql)
     db.commit()
     db.close()

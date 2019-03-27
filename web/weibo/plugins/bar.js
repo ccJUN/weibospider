@@ -1,41 +1,51 @@
 import echarts from "echarts";
-app.title = '坐标轴刻度与标签对齐';
 
-option = {
-    color: ['#3398DB'],
-    tooltip : {
-        trigger: 'axis',
-        axisPointer : {            
-            type : 'shadow' 
-        }
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            axisTick: {
-                alignWithLabel: true
+export  default function echartsBar(x,y){
+    var app = {},
+    option = null;
+    var dom = document.getElementById("report-container");
+    var myChart = echarts.init(dom);
+    app.title = '转发数';
+    console.log('x',x)
+    console.log('y',y)
+    option = {
+        color: ['rgb(12, 125, 245)'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            
+                type : 'shadow' 
             }
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'直接访问',
-            type:'bar',
-            barWidth: '60%',
-            data:[10, 52, 200, 334, 390, 330, 220]
-        }
-    ]
-};
-
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : x,
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'转发次数',
+                type:'bar',
+                barWidth: '60%',
+                data:y
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+}

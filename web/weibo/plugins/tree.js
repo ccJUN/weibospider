@@ -1,7 +1,6 @@
 import echarts from "echarts";
 
 export  default function echartsBar(data,container){
-    console.log(data.data,container)
     var app = {},
         data = data,
         chartDom = container,
@@ -10,7 +9,6 @@ export  default function echartsBar(data,container){
     echarts.util.each(data.children, function(datum, index) {
       index % 2 === 0 && (datum.collapsed = true);
     });
-    
     myChart.setOption(
       ( option = {
         tooltip: {
@@ -34,7 +32,6 @@ export  default function echartsBar(data,container){
                 fontSize: 14
               }
             },
-
             leaves: {
               label: {
                 normal: {
@@ -44,7 +41,6 @@ export  default function echartsBar(data,container){
                 }
               }
             },
-
             expandAndCollapse: true,
             animationDuration: 550,
             animationDurationUpdate: 750
