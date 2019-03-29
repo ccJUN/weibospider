@@ -9,7 +9,6 @@ def mysqlInsert(mysqldb,mysqlstring):
         user="root",
         passwd="zhouwenyi1992",
         database="weibo",
-        charset="utf8"
     )
     cursor = db.cursor()
     InsertString = mysqlstring
