@@ -31,7 +31,7 @@ def mysqlInsert(mysqldb,mysqlstring):
     mysqlContent=mysqlContent+')'
     mysqlKey=mysqlKey+')'
     sql = " INSERT INTO  " +mysqldb + mysqlKey + " VALUES  " +mysqlContent
-    print(sql)
+    # print(sql)
     cursor.execute(sql)
     db.commit()
     db.close()

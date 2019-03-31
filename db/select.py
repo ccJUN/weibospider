@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import mysql.connector
-
 class Datebase:
     def __init__(self):
         self.conn = mysql.connector.connect(

@@ -13,7 +13,6 @@ from db import insert
 global_headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36','charset':'utf-8'}
 weiboID=0
 hotnumber=0
-reportnumber=0
 proxies = {}
 
 def getProxies():
@@ -56,33 +55,32 @@ def getWeibo():
         weibo['nextnode'] = '0'
         weibo['content'] = weiboContent['text']
         weibo['verified_reason'] = weiboContent['user']['verified_reason']
+        print(weiboid)
         insert.mysqlInsert('start',weibo)
     except:
         print('getWeibo:error')
     return weiboid
 
 def getHotReports(mid,page,reportnumber,proxies):
-    print()
     mid = mid
+    hotUrl = 'https://api.weibo.cn/2/statuses/hot_repost_timeline?gsid=_2A25xmCY8DeRxGeRK7VIZ8yvNzD6IHXVQDD70rDV6PUJbkdAKLRPfkWpNU39zlaC7MMoKKCuC8ujhPUrx8lFzj5LN&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&moduleID=feed&id='+str(mid)+'&featurecode=10000085&count=20&page='+str(page)+''
+    hotReq = requests.get(hotUrl,headers =global_headers,proxies=proxies,timeout=30)
     try:
-        hotUrl = 'https://api.weibo.cn/2/statuses/hot_repost_timeline?gsid=_2A25xmCY8DeRxGeRK7VIZ8yvNzD6IHXVQDD70rDV6PUJbkdAKLRPfkWpNU39zlaC7MMoKKCuC8ujhPUrx8lFzj5LN&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&moduleID=feed&id='+str(mid)+'&featurecode=10000085&count=20&page='+str(page)+''
-        hotReq = requests.get(hotUrl,headers =global_headers,proxies=proxies,timeout=30)
-        print(hotReq)
         if(hotReq.status_code==418):
+            time.sleep(20)
             proxiesText = getProxies()
             proxies = {
                 "http": "http://"+proxiesText.strip('\n').encode('ascii') ,
                 "https": "https://"+proxiesText.strip('\n').encode('ascii'),
             }
             hotReq = requests.get(hotUrl,headers =global_headers,proxies=proxies,timeout=30)
-            print(418)
         HotContent = hotReq.json()
         hotRepostsList = HotContent['reposts']
         reportnumber = reportnumber + len(hotRepostsList)
         totalNumber = HotContent['total_number']
-        if(len(hotRepostsList)<1):
-            return 'end'
         for i in range(len(hotRepostsList)):
+            if(len(hotRepostsList)<1):
+                break
             weibo = {}
             weibo['anchor'] =  hotRepostsList[i]['user']['name']
             weibo['fans'] =   hotRepostsList[i]['user']['followers_count']
@@ -98,15 +96,13 @@ def getHotReports(mid,page,reportnumber,proxies):
             weibo['content'] =  hotRepostsList[i]['text']
             weibo['verified_reason'] =  hotRepostsList[i]['user']['verified_reason']
             insert.mysqlInsert('start',weibo)
-            time.sleep(10)
+            print(proxies)
             getHotReports(hotRepostsList[i]['id'],1,0,proxies)
-            if(totalNumber > reportnumber):
-                getHotReports(mid,page+1,reportnumber,proxies)
-            else:
-                print('123')
+        if(totalNumber > reportnumber):
+            print('page',mid,totalNumber,reportnumber,proxies)
+            getHotReports(mid,page+1,reportnumber,proxies)
     except:
         print('error')
-
     return '1'
 
 if __name__=="__main__":
