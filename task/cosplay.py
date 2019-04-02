@@ -19,15 +19,18 @@ def getProxies():
     return  proxiesText
 
 def getCosplay():
+    userpassword = '_2A25xpaycDeRxGeRK7VIZ8yvNzD6IHXVQ8qdUrDV6PUJbkdANLU6gkWpNU39zlU7nlFZWy1gAeHc99AXs5NzZ-vSj'
     number = 100
     weibo = {}
     proxiesText = getProxies()
     proxies = {
-        "http": "http://"+proxiesText.strip('\n').encode('ascii') ,
+        "http": "http://"+proxiesText.strip('\n').encode('ascii'),
         "https": "https://"+proxiesText.strip('\n').encode('ascii'),
     }
+    print(proxies)
     for i in range(number):
-        url = 'https://api.weibo.cn/2/cardlist?gsid=_2A25xnp7xDeRxGeRK7VIZ8yvNzD6IHXVQDZU5rDV6PUJbkdAKLRPfkWpNU39zlRRCwU-X39VgkiwJVbCEs0956zVR&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lon=113.9287887904271&count=20&luicode=10000327&containerid=1087030002_2976_2001_5_hot&featurecode=10000233&uicode=10000327&fid=1087030002_2976_2001_5_hot&need_head_cards=0&lat=22.54344558548199&feed_mypage_card_remould_enable=1&offset=1&need_new_pop=1&page='+str(i+50)+'&lfid=1087030002_2975_2001&moduleID=pagecard'
+        url = 'https://api.weibo.cn/2/cardlist?gsid='+userpassword+'&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lon=113.9287887904271&count=20&luicode=10000327&containerid=1087030002_2976_2001_5_hot&featurecode=10000233&uicode=10000327&fid=1087030002_2976_2001_5_hot&need_head_cards=0&lat=22.54344558548199&feed_mypage_card_remould_enable=1&offset=1&need_new_pop=1&page='+str(i+30)+'&lfid=1087030002_2975_2001&moduleID=pagecard'
+        print(url)
         try:
             res = requests.get(url,headers =global_headers,proxies=proxies,timeout=30)
             content  = res.json()
@@ -35,7 +38,7 @@ def getCosplay():
             time.sleep(15)
             proxiesText = getProxies()
             proxies = {
-                "http": "http://"+proxiesText.strip('\n').encode('ascii') ,
+                "http": "http://"+proxiesText.strip('\n').encode('ascii'),
                 "https": "https://"+proxiesText.strip('\n').encode('ascii'),
             }
             res = requests.get(url,headers =global_headers,proxies=proxies,timeout=30)
@@ -51,7 +54,7 @@ def getCosplay():
                 cosplay['fans'] = user['followers_count']
                 cosplay['persondesc'] = card_group[j]['desc1'] + card_group[j]['desc2']
                 userid = user['id']
-                personUrl = 'https://api.weibo.cn/2/profile?gsid=_2A25xnp7xDeRxGeRK7VIZ8yvNzD6IHXVQDZU5rDV6PUJbkdAKLRPfkWpNU39zlRRCwU-X39VgkiwJVbCEs0956zVR&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&moduleID=pagecard&uicode=10000198&featurecode=10000233&luicode=10000327&dynamic_follow_button_menu_enable=1&user_domain='+str(userid)+'&lfid=1087030002_2976_2001_5_hot&lcardid=1087030002_2976_2001_5_hot_300080&sourcetype=page'
+                personUrl = 'https://api.weibo.cn/2/profile?gsid='+userpassword+'&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&moduleID=pagecard&uicode=10000198&featurecode=10000233&luicode=10000327&dynamic_follow_button_menu_enable=1&user_domain='+str(userid)+'&lfid=1087030002_2976_2001_5_hot&lcardid=1087030002_2976_2001_5_hot_300080&sourcetype=page'
                 try:
                     res = requests.get(personUrl,headers =global_headers,proxies=proxies,timeout=30)
                     person = res.json()
@@ -59,7 +62,7 @@ def getCosplay():
                     time.sleep(15)
                     proxiesText = getProxies()
                     proxies = {
-                        "http": "http://"+proxiesText.strip('\n').encode('ascii') ,
+                        "http": "http://"+proxiesText.strip('\n').encode('ascii'),
                         "https": "https://"+proxiesText.strip('\n').encode('ascii'),
                     }
                     res = requests.get(personUrl,headers =global_headers,proxies=proxies,timeout=30)
@@ -74,21 +77,22 @@ def getCosplay():
                 if(person['userInfo'].has_key('ability_tags')):
                     cosplay['tags'] =  person['userInfo']['ability_tags']
                 containerid = person['tabsInfo']['tabs'][0]['containerid'].encode('ascii')
-                groupUrl = 'https://api.weibo.cn/2/cardlist?gsid=_2A25xnp7xDeRxGeRK7VIZ8yvNzD6IHXVQDZU5rDV6PUJbkdAKLRPfkWpNU39zlRRCwU-X39VgkiwJVbCEs0956zVR&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lcardid='+containerid+'_-_WEIBO_INDEX_PROFILE_DATA_FIELDGROUPTL&count=20&luicode=10000198&containerid=231051_-_followers_-_'+str(personid)+'_-_1042015%3AtagCategory_039&featurecode=10000233&uicode=10000011&fid=231051_-_followers_-_'+str(personid)+'_-_1042015%3AtagCategory_039&need_head_cards=1&feed_mypage_card_remould_enable=1&need_new_pop=1&page=1&sourcetype=page&moduleID=pagecard&lfid='+containerid+''
+                groupUrl = 'https://api.weibo.cn/2/cardlist?gsid='+userpassword+'&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lcardid='+containerid+'_-_WEIBO_INDEX_PROFILE_DATA_FIELDGROUPTL&count=20&luicode=10000198&containerid=231051_-_followers_-_'+str(personid)+'_-_1042015%3AtagCategory_039&featurecode=10000233&uicode=10000011&fid=231051_-_followers_-_'+str(personid)+'_-_1042015%3AtagCategory_039&need_head_cards=1&feed_mypage_card_remould_enable=1&need_new_pop=1&page=1&sourcetype=page&moduleID=pagecard&lfid='+containerid+''
                 try:
                     res = requests.get(groupUrl,headers =global_headers,proxies=proxies,timeout=30)
                     group = res.json()
+                    group = group['cards']
                 except:
                     time.sleep(15)
                     proxiesText = getProxies()
                     proxies = {
-                        "http": "http://"+proxiesText.strip('\n').encode('ascii') ,
+                        "http": "http://"+proxiesText.strip('\n').encode('ascii'),
                         "https": "https://"+proxiesText.strip('\n').encode('ascii'),
                     }
-                    groupUrl = 'https://api.weibo.cn/2/cardlist?gsid=_2A25xnp7xDeRxGeRK7VIZ8yvNzD6IHXVQDZU5rDV6PUJbkdAKLRPfkWpNU39zlRRCwU-X39VgkiwJVbCEs0956zVR&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lcardid='+containerid+'_-_WEIBO_INDEX_PROFILE_DATA_FIELDGROUPTL&count=20&luicode=10000198&containerid=231051_-_followers_-_'+str(personid)+'_-_1042015%3AtagCategory_039&featurecode=10000233&uicode=10000011&fid=231051_-_followers_-_'+str(personid)+'_-_1042015%3AtagCategory_039&need_head_cards=1&feed_mypage_card_remould_enable=1&need_new_pop=1&page=1&sourcetype=page&moduleID=pagecard&lfid='+containerid+''
+                    groupUrl = 'https://api.weibo.cn/2/cardlist?gsid='+userpassword+'&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lcardid='+containerid+'_-_WEIBO_INDEX_PROFILE_DATA_FIELDGROUPTL&count=20&luicode=10000198&containerid=231051_-_followers_-_'+str(personid)+'_-_1042015%3AtagCategory_039&featurecode=10000233&uicode=10000011&fid=231051_-_followers_-_'+str(personid)+'_-_1042015%3AtagCategory_039&need_head_cards=1&feed_mypage_card_remould_enable=1&need_new_pop=1&page=1&sourcetype=page&moduleID=pagecard&lfid='+containerid+''
                     res = requests.get(groupUrl,headers =global_headers,proxies=proxies,timeout=30)
                     group = res.json()
-                group = group['cards']
+                    group = group['cards']
                 groupdesc = '0'
                 for k in range(len(group)):
                     try:
@@ -97,7 +101,7 @@ def getCosplay():
                     except:
                             groupdesc = '0'
                 cosplay['weibogroups'] =groupdesc
-                weibopersonurl = 'https://api.weibo.cn/2/cardlist?gsid=_2A25xmyB5DeRxGeRK7VIZ8yvNzD6IHXVQ8TSxrDV6PUJbkdAKLRPfkWpNU39zlUCZbdyUmmzc2X7mHKib4O59BmYv&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lcardid=more_web&count=20&luicode=10000198&containerid='+containerid+'_-_INFO&featurecode=10000233&uicode=10000011&fid=2302832553226277_-_INFO&need_head_cards=1&feed_mypage_card_remould_enable=1&need_new_pop=1&page=1&sourcetype=page&moduleID=pagecard&lfid='+containerid+''
+                weibopersonurl = 'https://api.weibo.cn/2/cardlist?gsid='+userpassword+'&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lcardid=more_web&count=20&luicode=10000198&containerid='+containerid+'_-_INFO&featurecode=10000233&uicode=10000011&fid=2302832553226277_-_INFO&need_head_cards=1&feed_mypage_card_remould_enable=1&need_new_pop=1&page=1&sourcetype=page&moduleID=pagecard&lfid='+containerid+''
                 print(weibopersonurl)
                 try:
                     weibopersonres = requests.get(weibopersonurl,headers =global_headers,proxies=proxies,timeout=30)
@@ -106,7 +110,7 @@ def getCosplay():
                     time.sleep(15)
                     proxiesText = getProxies()
                     proxies = {
-                        "http": "http://"+proxiesText.strip('\n').encode('ascii') ,
+                        "http": "http://"+proxiesText.strip('\n').encode('ascii'),
                         "https": "https://"+proxiesText.strip('\n').encode('ascii'),
                     }
                     weibopersonres = requests.get(weibopersonurl,headers =global_headers,proxies=proxies,timeout=30)
