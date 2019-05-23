@@ -1,70 +1,139 @@
 <template>
-  <section class="container">
-      <div class="search">
-        <input placeholder="输入搜索热点" value="" name="words">
-        <button class="ui-btn" @click="startScrapy">热点分析</button>
-      </div>
-      <p class="tips">微博热点抓取分析需要1个小时</p>
-    <div class="report-content">
-      <div class="report-title">
-          <h1 class="title">啥是佩奇 微博热点路径分析</h1>
-          <p class="source"></p>
-      </div>
-      <div class="data-list">
-        <div class="new-big-title"><span>转发影响</span></div>
-        <div class="float small-title">
-          <p>啥是佩奇，总转发<span>{{reportsSum}}</span>次数</p>
-        </div>
-        <div class="echart-main float">
-          <div id="report-container" class="main"></div>
-        </div>
-      </div>
-      <div class="report-line"></div>
-      <div class="data-list">
-          <div class="new-big-title"><span>时间图谱</span></div>
-          <div>
-            <h2 class="subtitle">时间图谱</h2>
+   <section class="container">
+    <header>
+      <h1>效果监控</h1>
+    </header>
+    <div class="tabs">
+      <ul class="link">
+        <li
+          v-for="(index,value) in listenTab" 
+          :class="[index.name==currentname&&'active']"
+          @click="exchange(index.name,index.web)"
+          >{{index.name}}</li>
+      </ul>
+      <button>+添加网站监控</button>
+    </div>
+    <div class="datalist-list">
+      <ul>
+        <li>
+          <div class="header">
+            <span class="site-name">百度</span>
           </div>
-          <div id="container" class="weibo-main">
-            <ul>
-              <li v-for="index in weibotimeline" :key="index" class="weibo-content">
-                  <p class="weibo-time">{{index.time}}</p>
-                  <div class="line"></div>
-                  <div class="weibo-panel">
-                    <p class="weibo-anchor">{{index.anchor}}</p>
-                    <p class="weibo-reports">{{index.reports}}</p>
-                  </div>
-              </li>
-            </ul>
+          <div class="body">
+            <div class="data-info-wrap">
+              <div class="rank">
+                <p>{{baidupc[currentIndex].rank}}</p>
+                <p class="sub-text">受宠排名</p>
+              </div>
+              <div class="other-rank">
+                <div class="row">
+                  <p>{{baidupc[currentIndex].weight}}</p>
+                  <p class="sub-text">网站权重</p>
+                </div>
+              </div>
+               <div class="ip">
+                  <p>{{baidupc[currentIndex].ip}}<span class="sub-ip">IP</span></p>
+                  <p class="sub-text">预计百度来源</p>
+                </div>
+            </div>
+            <div class="ehcart2" id="baidu-container">
+            </div>
+            <div class="ehcart3" id="rank-container">
+            </div>
           </div>
-          <div class="echart"></div>
-      </div>
-      <div class="report-line"></div>
-      <div class="data-list">
-          <div class="new-big-title"><span>关系链图谱</span></div>
-          <h2 class="subtitle"></h2>
-          <div id="container" class="main"></div>
-          <div class="echart"></div>
-      </div>
-      <div class="report-line"></div>
-      <div class="data-list">
-          <div class="new-big-title"><span>媒体类型</span></div>
-          <h2 class="subtitle"></h2>
-          <div id="container" class="main"></div>
-          <div class="echart"></div>
-      </div>
+        </li>
+        <li>
+          <div class="header">
+            <span class="site-name">百度移动</span>
+          </div>
+          <div class="body">
+            <div class="data-info-wrap">
+              <div class="rank">
+                <p>{{baidum[currentIndex].rank}}</p>
+                <p class="sub-text">受宠排名</p>
+              </div>
+              <div class="other-rank">
+                <div class="row">
+                  <p>{{baidum[currentIndex].weight}}</p>
+                  <p class="sub-text">网站权重</p>
+                </div>
+              </div>
+               <div class="ip">
+                  <p>{{baidum[currentIndex].ip}}<span>IP</span></p>
+                  <p class="sub-text">预计百度移动来源</p>
+                </div>
+                <div class="ehcart2" id="baidu-container2"></div>
+                <div class="ehcart3" id="rank-container2"></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="header">
+            <span class="site-name">360so</span>
+          </div>
+          <div class="body">
+            <div class="data-info-wrap">
+              <div class="rank">
+                <p>{{so[currentIndex].rank}}</p>
+                <p class="sub-text">受宠排名</p>
+              </div>
+              <div class="other-rank">
+                <div class="row">
+                  <p>{{so[currentIndex].weight}}</p>
+                  <p class="sub-text">网站权重</p>
+                </div>
+              </div>
+               <div class="ip">
+                  <p>{{so[currentIndex].ip}}<span>IP</span></p>
+                  <p class="sub-text">预计so来源</p>
+                </div>
+                <div class="ehcart2" id="shoulv-container"></div>
+                <div class="ehcart3" id="rank-container"></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="header">
+            <span class="site-name">搜狗</span>
+          </div>
+          <div class="body">
+            <div class="data-info-wrap">
+              <div class="rank">
+                <p>-</p>
+                <p class="sub-text">受宠排名</p>
+              </div>
+              <div class="other-rank">
+                <div class="row">
+                  <p>{{sogou[currentIndex].weight}}</p>
+                  <p class="sub-text">网站权重</p>
+                </div>
+              </div>
+               <div class="ip">
+                  <p>{{sogou[currentIndex].ip}}<span>IP</span></p>
+                  <p class="sub-text">预计搜狗来源</p>
+                </div>
+                <div class="ehcart2" id="report-container"></div>
+                <div class="ehcart3"></div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </section>
 </template>
 
 <style lang="scss" scoped src="~/assets/scss/index.scss"></style>
+<style lang="scss" scoped src="~/assets/scss/echart.scss"></style>
 <script>
-import echarts from "echarts";
 import jquery from "jquery";
 import echartsTree from "../plugins/tree";
 import axios from 'axios'
 import getApi from '../plugins/getrelation'
-import echartBar from "../plugins/bar"
+import echartsBar from "../plugins/bar"
+import echartsLine from "../plugins/line"
+import echartsLine2 from "../plugins/baidum"
+import echartsLine3 from "../plugins/baidum2"
+
 export default {
   data() {
     return {
@@ -72,7 +141,78 @@ export default {
       weibotimeline:[],
       reports:[],
       reportsSum:0,
-
+      listenTab: [],
+      currentname: '波洞',
+      currentweb:'boodo.qq.com',
+      currentIndex:0,
+      baidupc: [
+        {
+          rank:'903,294',
+          weight:1,
+          ip:'144~168'
+        },
+        {
+          rank:'654',
+          weight:4,
+          ip:'38,221~60,228'
+        },
+        {
+          rank:'18,015',
+          weight:6,
+          ip:'23,509~28,410'
+        }
+      ],
+      baidum:[
+        {
+          rank:'170,846',
+          weight:1,
+          ip:'271 ~ 301'
+        },
+        {
+          rank:'640',
+          weight:'5',
+          ip:'25,223 ~ 38,506'
+        },
+        {
+          rank:'20,681',
+          weight:6,
+          ip:'15,084 ~ 18,085'
+        }
+      ],
+      so:[
+        {
+          rank:'528,712',
+          weight:1,
+          ip:'86~100'
+        },
+        {
+          rank:'13,642',
+          weight:5,
+          ip:'22,932~36,136'
+        },
+        {
+          rank:'10,874',
+          weight:6,
+          ip:'14,105~17,046'
+        }
+      ],
+      sogou:[
+        {
+          rank:'暂无',
+          weight:1,
+          ip:'5~67'
+        },
+        {
+          rank:'640',
+          weight:'5',
+          ip:'15288~24091'
+        },
+        {
+          rank:'18015',
+          weight:6,
+          ip:'9403~11364'
+        }
+      ]
     };
   },
   beforeCreate(){
@@ -84,21 +224,34 @@ export default {
   computed: {
   },
   mounted() {
-    this.getReport();
-    this.getSum();
-    this.getTime();
+    this.getRecord();
+    this.getIp();
+    this.getWebsites();
+    this.getListen();
+    this.getTop();
+    echartsLine2('baidu-container2');
+    echartsLine3();
   },
   methods: {
-      // 开始抓取数据
-      startScrapy:function(){
-        axios.get('http://127.0.0.1:5000/scrapy',{
-          params:{
-            words:jquery("input[name=words]").val()
-        }}).then(function(response){
-
+      getListen:function(){
+        self = this;
+        axios.get('http://127.0.0.1:5000/getlisten').then(function(response){
+          let data = response.data;
+          let arr = data.split('),')
+          arr.forEach(i => {
+            let listenjson = {}
+            listenjson.web = i.split(',')[0];
+            name = i.split(',')[1];
+            name = decodeURI(name).substr(2, name.length-3);
+            listenjson.name = name
+            self.listenTab.push(listenjson)
+          });
         })
       },
-
+      getRecord:function(){
+        axios.get('http://127.0.0.1:5000/getrecord').then(function(response){
+        })
+      },
       //修改编码 
       decodeUnicode:function(str) {
           str = str.replace(/\\/g, "%");
@@ -106,33 +259,42 @@ export default {
       },
 
       // 
-      draw: function() {
-        axios.get('http://127.0.0.1:5000/getRelation',{
-        params:{
-          words:jquery("input[name=words]").val()
-        }}).then(function(response){
+      getIp: function() {
+        axios.get('http://127.0.0.1:5000/getip').then(function(response){
             var res = response
             var dom = document.getElementById("container");
-            // echartsBar(weibojson,dom);
+            echartsBar();
         })
       },
 
       //获取次数
-      getReport:function(){
+      getWebsites:function(){
           var self = this;
-          axios.get('http://127.0.0.1:5000/gethotrepeat').then(function(response){
-            let data = response.data.split('),');
-            let anchor = [];
-            let report = [];
-            for(var i = 0;i<data.length;i++){
-              let tem = {};
-              anchor.push(self.decodeUnicode(data[i].split('(')[1].split(', u')[1].split(',')[0]));
-              report.push(data[i].split('(')[1].split(',')[2]);
+          let selectweb = this.currentweb;
+          axios.get('http://127.0.0.1:5000/getwebsites',{
+            params: {
+              web: selectweb
             }
-            echartBar(anchor,report)
+          }).then(function(response){
+            console.log(response.data)
+            var containerY = response.data
+            echartsLine('baidu-container','',containerY);
           })
       },
-
+      //获取次数
+      getTop:function(){
+          var self = this;
+          let selectweb = this.currentweb;
+          axios.get('http://127.0.0.1:5000/gettop',{
+            params: {
+              web: selectweb
+            }
+          }).then(function(response){
+            console.log(response.data)
+            var containerY = response.data.result;
+            echartsBar('rank-container','',containerY);
+          })
+      },
       //获取转发总次数
       getSum:function(){
           var self = this;
@@ -155,6 +317,22 @@ export default {
             console.log(this.weibotimeline)
               // this.reportsSum = response.data.split('(\'')[1].split('\')')[0];
           })
+      },
+      exchange: function(name,web){
+        this.currentname = name;
+        this.currentweb = web.split('(')[1].substr(1,web.length-3);
+        console.log(this.currentweb)
+        if(this.currentweb=='boodo.qq.com'){
+          this.currentIndex = 0;
+        }
+        if(this.currentweb=='kuaibao.qq.com'){
+          this.currentIndex = 1;
+        }
+        if(this.currentweb=='browser.qq.com'){
+          this.currentIndex = 2;
+        }
+        this.getTop()
+        this.getWebsites()
       }
   }
 };
@@ -176,7 +354,6 @@ li{
   width: 730px;
   height: 420px;
 }
-
 
 
 .subtitle {

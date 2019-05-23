@@ -69,7 +69,6 @@ def getNewsWeb(url,word,originWord,proxies):
             comments_count = hot['comments_count'] #评论次数
             attitudes_count = hot['attitudes_count'] #点赞次数
             author = hot['user']['name'] #作者
-            print(author)
             followers_count = hot['user']['followers_count'] #作者粉丝
             created_at = hot['created_at'] #微博时间
             text = hot['text'] #微博内容
@@ -84,6 +83,15 @@ def getNewsWeb(url,word,originWord,proxies):
             sumNextnode = {}
             sumNextnode['types'] = ''
             sumNextnode['anchor'] = author
+            print(author)
+            try:
+                print('=====================')
+                print(hot['page_info']['media_info']['h5_url'])
+                print('=====================')
+                sumNextnode['videourl'] = hot['page_info']['media_info']['h5_url']
+            except:
+                print('error')
+                sumNextnode['videourl'] = '"无"'
             if(hot.has_key('obj_ext')):
                 sumNextnode['types'] = '"video"'
             elif(hot.has_key('pic_flag')):
@@ -103,7 +111,7 @@ def getNewsWeb(url,word,originWord,proxies):
             sumNextnode['currentnode'] = idstr
             sumNextnode['nextnode'] = '0'
             sumNextnode['topic'] = '"'+originWord+'"'
-            personUrl = 'https://api.weibo.cn/2/profile?gsid=_2A25xpaycDeRxGeRK7VIZ8yvNzD6IHXVQ8qdUrDV6PUJbkdANLU6gkWpNU39zlU7nlFZWy1gAeHc99AXs5NzZ-vSj&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&moduleID=pagecard&uicode=10000198&featurecode=10000233&luicode=10000327&dynamic_follow_button_menu_enable=1&user_domain='+str(userid)+'&lfid=1087030002_2976_2001_5_hot&lcardid=1087030002_2976_2001_5_hot_300080&sourcetype=page'
+            personUrl = 'https://api.weibo.cn/2/profile?gsid=_2A25x3j4DDeRxGeRK7VIZ8yvNzD6IHXVQyjbLrDV6PUJbkdANLU6gkWpNU39zlSWdFjjqXyGmrp8pSFDv5QE1Gk3e&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&moduleID=pagecard&uicode=10000198&featurecode=10000233&luicode=10000327&dynamic_follow_button_menu_enable=1&user_domain='+str(userid)+'&lfid=1087030002_2976_2001_5_hot&lcardid=1087030002_2976_2001_5_hot_300080&sourcetype=page'
             try:
                 res = requests.get(personUrl,headers =global_headers,proxies=agent,timeout=30)
                 person = res.json()
@@ -117,7 +125,7 @@ def getNewsWeb(url,word,originWord,proxies):
                 res = requests.get(personUrl,headers =global_headers,proxies=proxies,timeout=30)
                 person = res.json()
             containerid = person['tabsInfo']['tabs'][0]['containerid'].encode('ascii')
-            weibopersonurl = 'https://api.weibo.cn/2/cardlist?gsid=_2A25xpaycDeRxGeRK7VIZ8yvNzD6IHXVQ8qdUrDV6PUJbkdANLU6gkWpNU39zlU7nlFZWy1gAeHc99AXs5NzZ-vSj&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lcardid=more_web&count=20&luicode=10000198&containerid='+containerid+'_-_INFO&featurecode=10000233&uicode=10000011&fid=2302832553226277_-_INFO&need_head_cards=1&feed_mypage_card_remould_enable=1&need_new_pop=1&page=1&sourcetype=page&moduleID=pagecard&lfid='+containerid+''
+            weibopersonurl = 'https://api.weibo.cn/2/cardlist?gsid=_2A25x3j4DDeRxGeRK7VIZ8yvNzD6IHXVQyjbLrDV6PUJbkdANLU6gkWpNU39zlSWdFjjqXyGmrp8pSFDv5QE1Gk3e&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&lcardid=more_web&count=20&luicode=10000198&containerid='+containerid+'_-_INFO&featurecode=10000233&uicode=10000011&fid=2302832553226277_-_INFO&need_head_cards=1&feed_mypage_card_remould_enable=1&need_new_pop=1&page=1&sourcetype=page&moduleID=pagecard&lfid='+containerid+''
             try:
                 weibopersonres = requests.get(weibopersonurl,headers =global_headers,proxies=agent,timeout=30)
                 weiboperson = weibopersonres.json()
@@ -142,7 +150,7 @@ def getNewsWeb(url,word,originWord,proxies):
                 print('sql error' , sumNextnode)
             # 获取热门的转发
             try:
-                report_url = 'https://api.weibo.cn/2/statuses/repost_timeline?gsid=_2A25xpaycDeRxGeRK7VIZ8yvNzD6IHXVQ8qdUrDV6PUJbkdANLU6gkWpNU39zlU7nlFZWy1gAeHc99AXs5NzZ-vSj&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&id='+mid+'&mid='+mid+'&lcardid=seqid%3A1395807676%7Ctype'+url_word+'mid'+urlendecode_mid2+'qtime%3D'+str(timestamp)+'%26&pagesize=20&_status_id='+idstr+'&luicode=10000003&featurecode=10000085&uicode=10000002&rid=0_0_0_3068159735332620357_0_0_0&has_member=1&page=1&lfid=100103type'+word+'&moduleID=feed&sourcetype=page'
+                report_url = 'https://api.weibo.cn/2/statuses/repost_timeline?gsid=_2A25x3j4DDeRxGeRK7VIZ8yvNzD6IHXVQyjbLrDV6PUJbkdANLU6gkWpNU39zlSWdFjjqXyGmrp8pSFDv5QE1Gk3e&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&id='+mid+'&mid='+mid+'&lcardid=seqid%3A1395807676%7Ctype'+url_word+'mid'+urlendecode_mid2+'qtime%3D'+str(timestamp)+'%26&pagesize=20&_status_id='+idstr+'&luicode=10000003&featurecode=10000085&uicode=10000002&rid=0_0_0_3068159735332620357_0_0_0&has_member=1&page=1&lfid=100103type'+word+'&moduleID=feed&sourcetype=page'
                 reportRes = requests.get(report_url,headers =global_headers,proxies=agent)
             except:
                 proxiesText = getProxies()
@@ -151,7 +159,7 @@ def getNewsWeb(url,word,originWord,proxies):
                     "https": "https://"+proxiesText.strip('\n').encode('ascii'),
                 }
                 agent = proxies
-                report_url = 'https://api.weibo.cn/2/statuses/repost_timeline?gsid=_2A25xpaycDeRxGeRK7VIZ8yvNzD6IHXVQ8qdUrDV6PUJbkdANLU6gkWpNU39zlU7nlFZWy1gAeHc99AXs5NzZ-vSj&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&id='+mid+'&mid='+mid+'&lcardid=seqid%3A1395807676%7Ctype'+url_word+'mid'+urlendecode_mid2+'qtime%3D'+str(timestamp)+'%26&pagesize=20&_status_id='+idstr+'&luicode=10000003&featurecode=10000085&uicode=10000002&rid=0_0_0_3068159735332620357_0_0_0&has_member=1&page=1&lfid=100103type'+word+'&moduleID=feed&sourcetype=page'
+                report_url = 'https://api.weibo.cn/2/statuses/repost_timeline?gsid=_2A25x3j4DDeRxGeRK7VIZ8yvNzD6IHXVQyjbLrDV6PUJbkdANLU6gkWpNU39zlSWdFjjqXyGmrp8pSFDv5QE1Gk3e&sensors_mark=0&wm=3333_2001&i=6ad58d4&sensors_is_first_day=false&from=1093193010&b=0&c=iphone&networktype=wifi&skin=default&v_p=71&s=faf66666&v_f=1&sensors_device_id=9B9C5EE4-5B76-4605-BDF4-FF99705D8A87&lang=zh_CN&sflag=1&ua=iPhone10,3__weibo__9.3.1__iphone__os11.3&ft=11&aid=01Amd-yldu89BHuS4TwhgANlLd3xEbwvWa2lEeRqA7vHD1LWQ.&id='+mid+'&mid='+mid+'&lcardid=seqid%3A1395807676%7Ctype'+url_word+'mid'+urlendecode_mid2+'qtime%3D'+str(timestamp)+'%26&pagesize=20&_status_id='+idstr+'&luicode=10000003&featurecode=10000085&uicode=10000002&rid=0_0_0_3068159735332620357_0_0_0&has_member=1&page=1&lfid=100103type'+word+'&moduleID=feed&sourcetype=page'
                 reportRes = requests.get(report_url,headers =global_headers,proxies=proxies)
             try:
                 reportContent  = reportRes.json()['hot_reposts']
@@ -178,4 +186,5 @@ def getNewsWeb(url,word,originWord,proxies):
                     sumNextnode['children'].append(reportnode)
             weibodict['children'].append(nextnode)
             weiboSum['children'].append(sumNextnode)
+
     return weibodict['children']

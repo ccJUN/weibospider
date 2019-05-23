@@ -19,19 +19,19 @@ def mysqlInsert(mysqldb,mysqlstring):
         if(key==InsertString.keys()[-1] ):
             mysqlKey=mysqlKey+str(key).encode('utf-8')
             if(type(value)== unicode):
-                mysqlContent = mysqlContent+'"'+value.encode('utf-8')+'"'
+                mysqlContent = mysqlContent+"'"+value.encode('utf-8')+"'"
             else:
                 mysqlContent = mysqlContent+str(value)
         else:
             if(type(value)== unicode):
-                mysqlContent = mysqlContent+'"'+value.encode('utf-8')+'",'
+                mysqlContent = mysqlContent+"'"+value.encode('utf-8')+"',"
             else:
                 mysqlContent = mysqlContent+str(value)+','
             mysqlKey=mysqlKey+str(key).encode('utf-8')+','
     mysqlContent=mysqlContent+')'
     mysqlKey=mysqlKey+')'
     sql = " INSERT INTO  " +mysqldb + mysqlKey + " VALUES  " +mysqlContent
-    # print(sql)
+    print(sql)
     cursor.execute(sql)
     db.commit()
     db.close()

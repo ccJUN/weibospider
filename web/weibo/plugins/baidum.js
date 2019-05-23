@@ -1,13 +1,12 @@
 import Highcharts from "highcharts"
-export  default function echartsBar(container,ContainerX,containerY){
-    console.log(containerY)
-    var chart = Highcharts.chart(container, {
+export  default function echartsLine2(container,ContainerX,containerY){
+    var chart = Highcharts.chart('rank-container2', {
         title: {
             text: '关键词排名趋势'
         },
         yAxis: {
             title: {
-                text: '排名数'
+                text: '收录数'
             }
         },
         xAxis:{
@@ -28,10 +27,8 @@ export  default function echartsBar(container,ContainerX,containerY){
             }
         },
         series: [
-            {name:"Top100",data:containerY.Top100},
-            {name:"Top50",data:containerY.Top50},
-            {name:"Top20",data:containerY.Top20},
-            {name:"Top10",data:containerY.Top10},
+            {name:"Top20",data:[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
+            {name:"Top10",data:[1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,0,0,0,0,1,1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},
         ],
         responsive: {
             rules: [{

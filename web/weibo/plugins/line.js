@@ -1,13 +1,12 @@
 import Highcharts from "highcharts"
-export  default function echartsBar(container,ContainerX,containerY){
-    console.log(containerY)
-    var chart = Highcharts.chart(container, {
+export  default function echartsLine(ontainer,ContainerX,containerY){
+    var chart = Highcharts.chart('baidu-container', {
         title: {
-            text: '关键词排名趋势'
+            text: '收录趋势'
         },
         yAxis: {
             title: {
-                text: '排名数'
+                text: '收录数'
             }
         },
         xAxis:{
@@ -27,12 +26,10 @@ export  default function echartsBar(container,ContainerX,containerY){
                 },
             }
         },
-        series: [
-            {name:"Top100",data:containerY.Top100},
-            {name:"Top50",data:containerY.Top50},
-            {name:"Top20",data:containerY.Top20},
-            {name:"Top10",data:containerY.Top10},
-        ],
+        series: [{
+            name: '日收录量',
+            data: containerY.result
+        }],
         responsive: {
             rules: [{
                 condition: {
